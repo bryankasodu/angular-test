@@ -35,7 +35,6 @@ jobs:
         with:
           node-version: '14'
           
-        
       - name: Install Depedencies
         run: npm ci
       
@@ -47,6 +46,46 @@ jobs:
     needs: [build]
     
     steps: 
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.3.0   
+        with:
+          node-version: '14'     
+        
+          
+      - name: Run Install
+        run: npm install
+        
+      - name: Run Build
+        run: npm run build
+               
+               
+      - name: Folder List
+        run: ls    
+        
+#       - name: pwd directory
+#         run: pwd
+        
+#       - name: cd to dist
+#         run: cd ${{ github.workspace }}/dist
+               
+#       - name: Folder List
+#         run: ls    
+  
+
+      - name: Install Alibaba Cloud OSSUTIL
+        run: wget http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 && chmod +x ossutil64
+      - name: Configure Alibaba Cloud OSSUTIL
+        run: ./ossutil64 config -i ${ACCESS_KEY} -k ${ACCESS_KEY_SECRET} -e ${ENDPOINT} -c .ossutilconfig
+      - name: Upload the web folder to the chosen OSS bucket
+        run: ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }}/dist/angular-test oss://${BUCKET} -r -f
+
+        
+#      - name: Serve
+#        run: npm run start
+
+
 #      - uses: AliyunWorkbench/workbench-oss@1.0.0
 #        with:
 #         ACCESS_KEY: LTAI5t8krv557nuWgfhaXnyf
@@ -55,23 +94,3 @@ jobs:
 #         OSS_BUCKET: poukgading
 #         OSS_PATH: /
 #         UPLOAD_PATH: ./build
-
-          
-     - name: Run Install
-       run: npm install
-        
-     - name: Run Build
-       run: npm run build
-       
-
-#      - uses: actions/checkout@v3
-#      - name: Install Alibaba Cloud OSSUTIL
-#        run: wget http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 && chmod +x ossutil64
-#      - name: Configure Alibaba Cloud OSSUTIL
-#        run: ./ossutil64 config -i ${ACCESS_KEY} -k ${ACCESS_KEY_SECRET} -e ${ENDPOINT} -c .ossutilconfig
-#      - name: Upload the web folder to the chosen OSS bucket
-#        run: ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }} oss://${BUCKET} -r -f
-
-        
-#      - name: Serve
-#        run: npm run start
