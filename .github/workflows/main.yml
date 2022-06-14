@@ -14,8 +14,8 @@ on:
 env:
   BUCKET: poukgading
   ENDPOINT: oss-ap-southeast-5.aliyuncs.com
-  ACCESS_KEY: LTAI5t8krv557nuWgfhaXnyf
-  ACCESS_KEY_SECRET: 63aB7rIQnUD39Vxdl67RoBgAtUSct4
+  ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+  ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
