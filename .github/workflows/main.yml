@@ -37,13 +37,7 @@ jobs:
           
       - name: Install Depedencies
         run: npm ci
-      
-<<<<<<< HEAD
-=======
-      - name: Run server
-        run: npm run-script server:headless
-      
->>>>>>> 67aa6dcb80af8b5a76c2da8bb943c84a48dc67a3
+        
       - name: Run test
         run: npm run-script test:headless
         
